@@ -9,9 +9,13 @@
       font-family: Helvetica, Arial, sans-serif; 
       font-size: 1em;
     }
-    h1, h2, h3 {
-      color: #000000; 
+    h1 {
       font-family: Garamond, Helvetica, Arial, sans-serif; 
+      font-size: 3em;
+    }
+    h2 {
+      margin-top: 1em;
+      font-family: Trebuchet, Helvetica, Arial, sans-serif; 
     }
     table {
       border-collapse: collapse;

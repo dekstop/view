@@ -2,6 +2,8 @@
 
 <h1><?= $title ?></h1>
 
+<h2>I. Renderers</h2>
+
 <p>Default renderers for basic types:</p>
 <table border="0">
 <tr>
@@ -16,7 +18,7 @@
 <? } ?>
 </table>
 
-<p>Some examples of user-defined renderers:</p>
+<p>Some examples of using custom renderer functions:</p>
 <table border="0">
 <tr>
   <th>Renderer</th>
@@ -75,9 +77,13 @@
 </tr>
 </table>
 
+<h2>II. Exceptions</h2>
+
 <? if ($pleaseCrashMe->is_true()) { ?>
-<p>And this is what it looks like when a render function is used in a template that View.php fails to find in the include path:</p>
-<?= $item->number->undefined_renderer() ?>
+<p>This is what happens when a template calls a render function that View.php fails to find in the include path: It will throw an Exception.</p>
+<pre>
+<?= $vars->number->this_renderer_does_not_exist() ?>
+</pre>
 <? } ?>
 
 <? include('footer.php') ?>

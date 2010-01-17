@@ -4,7 +4,7 @@ require_once('../../lib/View.php');
 // prepare some properties to display
 $model = new Model(); // could also provide a map of properties to constructor
 
-$model->title = 'View: A Basic Example';
+$model->title = 'View.php – A Basic Example';
 
 $model->vars = array(); // map of properties
 $model->vars['number'] = 1234567890;
