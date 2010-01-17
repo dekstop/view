@@ -10,7 +10,7 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
   
   public function PropertyList($data=array()) {
     foreach ($data as $k=>$v) {
-      $this->data[$k] = self::_wrap($v);
+      $this->data[$k] = Sandbox::wrap($v);
     }
   }
   
@@ -21,7 +21,7 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
     if (is_null($key)) { // array append syntax used? e.g. $my_propertylist[] = $value
       $key = count($this->data);
     }
-    $this->data[$key] = self::_wrap($value);
+    $this->data[$key] = Sandbox::wrap($value);
   }
 
   /**
@@ -49,7 +49,7 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
    * $my_propertylist->a = 123
    */
   public function __set($key, $value) {
-    $this[$key] = self::_wrap($value);
+    $this[$key] = Sandbox::wrap($value);
   }
   
   /**
@@ -65,7 +65,7 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
   public function raw() {
     $r = array();
     foreach ($this->data as $k=>$v) {
-      $r[$k] = self::_unwrap($v);
+      $r[$k] = Sandbox::unwrap($v);
     }
     return $r;
   }
@@ -77,7 +77,7 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
   // public function keys() {
   //   $r = array();
   //   foreach (array_keys($this->data) as $k) {
-  //     $r[] = self::_wrap($k);
+  //     $r[] = Sandbox::wrap($k);
   //   }
   //   return $r;
   // }
@@ -93,8 +93,8 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
    * Dispatcher for user-defined list renderers.
    */
   public function __call($name, $args=null) {
-    $r = get_list_renderer($name);
-    return self::_wrap($r($this, $args));
+    $r = RendererLoader::get_list_renderer($name);
+    return Sandbox::wrap($r($this, $args));
   }
 
   // Iterator functions
@@ -122,23 +122,5 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
 
   // Countable function
   public function count() { return count($this->data); }
-  
-  // util
-  private static function _wrap($value) {
-    if (($value instanceof Property) || ($value instanceof PropertyList)) {
-      return $value; // don't wrap twice
-    }
-    if (is_array($value)) {
-      return new PropertyList($value);
-    }
-    return new Property($value);
-  }
-
-  private static function _unwrap($value) {
-    if (($value instanceof Property) || ($value instanceof PropertyList)) {
-      return $value->raw();
-    }
-    return $value;
-  }
 }
 ?>

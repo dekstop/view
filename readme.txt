@@ -177,6 +177,12 @@ method calls.
  = TODO =
  ========
 
+TODO: more essential renderers: default, format (sprintf), strip_tags, strip, truncate, 
+TODO: more useful renderers: capitalize, lower, upper, wordwrap, regex_replace, replace, 
+TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? -> write global customisable escaping function, with unit tests using misc malicious markup
+TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
+TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope)
+TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
 TODO: clean up View.php
 TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
 FIXME: it's not nice that render functions are asymmetric in their interface: they receive properties, but emit raw values which then get wrapped into properties by the render dispatcher. This is somewhat convenient because renderer implementations don't need to explicitly wrap, but will likely confuse implementers because of its inconsistency.

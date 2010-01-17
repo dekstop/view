@@ -41,8 +41,8 @@ class Property {
    * Dispatcher for user-defined renderers.
    */
   public function __call($name, $args=null) {
-    $r = get_renderer($name);
-    return new Property($r($this, $args));
+    $r = RendererLoader::get_renderer($name);
+    return Sandbox::wrap($r($this, $args));
   }
   
   /**
@@ -59,5 +59,10 @@ class Property {
    * For use as flag in display logic control structures.
    */
   public function is_null() { return is_null($this->value); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_empty_string() { return $this->value===''; }
 }
 ?>

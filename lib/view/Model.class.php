@@ -9,5 +9,6 @@ class Model extends PropertyList {
   public function Model($d = array()) {
     parent::__construct($d);
   }
+
 }
 ?>

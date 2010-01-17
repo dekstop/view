@@ -12,8 +12,8 @@ class RendererUnitTestCase extends UnitTestCase {
     * pass them as an array to the render function.
     */
   function render($property_value, $renderer_name) {
-    $r = get_renderer($renderer_name);
-    $p = new Property($property_value);
+    $r = RendererLoader::get_renderer($renderer_name);
+    $p = Sandbox::wrap($property_value);
     $args = array();
     if (count(func_get_args())>2) {
       // we have varargs
@@ -28,8 +28,8 @@ class RendererUnitTestCase extends UnitTestCase {
     * pass them as an array to the render function.
     */
   function render_list($property_value, $renderer_name) {
-    $r = get_list_renderer($renderer_name);
-    $p = new PropertyList($property_value);
+    $r = RendererLoader::get_list_renderer($renderer_name);
+    $p = Sandbox::wrap($property_value);
     $args = array();
     if (count(func_get_args())>2) {
       // we have varargs
