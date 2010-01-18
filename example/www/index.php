@@ -13,7 +13,7 @@ $model->vars['float'] = 1/3;
 $model->vars['string'] = "My <i>Dearest</i> one, <br>My name is miss Sara";
 $model->vars['boolean'] = false;
 $model->vars['list'] = array(1, 10, 100, 1000, 100000, 1000000);
-$model->vars->list[] = 10000000; // append to list (and using object notation)
+$model->vars->list[] = 10000000; // append to list
 
 $model->pleaseCrashMe = true; // we will use this as a flag
 
