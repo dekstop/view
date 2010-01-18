@@ -67,6 +67,11 @@ To view the example copy the entire project to somewhere under your your web
 root, or just create a symlink to <View.php root>/example/www, and then open 
 <root path>/example/www/ in a browser.
 
+Here's the full example on the interwebs:
+* controller: http://github.com/dekstop/view/blob/master/example/www/index.php
+* view: http://github.com/dekstop/view/blob/master/example/templates/index.view.php
+* output: http://mardoen.textdriven.com/temp/view_php_basic_example-2010-01-17.html
+
 
  ===========
  = Details =
