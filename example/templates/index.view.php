@@ -62,7 +62,7 @@
 </tr>
 </table>
 
-<p>Effect of the <tt>bytes</tt> renderer on <?= count($sizes) ?> different numbers:</p>
+<p>Effect of the <tt>bytes</tt> renderer on <?= $sizes->count() ?> different numbers:</p>
 <table border="0">
 <tr>
   <th><tt>Number</tt></th>
@@ -103,6 +103,8 @@
 <pre>
 <?= $vars->int->this_renderer_does_not_exist() ?>
 </pre>
+<? } else { ?>
+<p>The Exception example is disabled.</p>
 <? } ?>
 
 <? include('footer.php') ?>
