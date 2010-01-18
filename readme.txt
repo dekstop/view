@@ -3,10 +3,11 @@
 View.php: a simple PHP template engine
 
 Requirements: 
-- PHP 5.2
+* PHP 5.2
 
 Caveats:
-- Note that View.php sets mbstring.internal_encoding to UTF-8
+* Note that View.php sets mbstring.internal_encoding to UTF-8
+
 
  ================
  = Introduction =
@@ -37,6 +38,7 @@ after I moved on to something else; in the meantime I'm quite enjoying working
 on it, and am happy to discuss your patches/suggestions.
 
 Martin Dittus, martin@dekstop.de
+
 
  ===========
  = Example =
@@ -77,6 +79,7 @@ local variables.
 This more or less describes the entire mechanism; but of course there's also
 a bit of magic involved.
 
+
 1. View.php Will Wrap Property and PropertyList Objects Around All Your Values
 
 All data passed to display templates via the Model class gets encapsulated in
@@ -109,6 +112,7 @@ I realise that this is not acceptable, and I violate this in one of my own
 examples. We might change this behaviour in the future, but I'm not convinced 
 that it's actually possible. Cf. http://bugs.php.net/bug.php?id=45684
 
+
 2. Render Functions Control the Display of Property Values
 
 You call user-defined render functions to convert a property's encapsulated 
@@ -128,7 +132,8 @@ The default renderer will always implicitly be called last, and takes care
 of HTML escaping. To prevent this you can call the 'raw' renderer: 
   <?= $item->raw() ?>
 
-4. Checking for Specific Values in Your Display Logic is Slightly Inconvenient
+
+3. Checking for Specific Values in Your Display Logic is Slightly Inconvenient
 
 Checking the value of a property requires a small detour. This is a direct 
 effect of our main design goal (secure output via encapsulation of properties.)
@@ -145,7 +150,8 @@ in your comparisons and skipping the conversion to 'raw', but at minimum this
 will lead to some very confusing side-effects and edge cases, so I recommend 
 that you avoid this.
 
-5. User-Defined Render Functions Are Auto-Loaded By Name
+
+4. User-Defined Render Functions Are Auto-Loaded By Name
 
 Render functions are PHP functions that adhere to a couple of conventions.
 You may already know the general approach from other frameworks. 
