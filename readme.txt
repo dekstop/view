@@ -169,9 +169,9 @@ Since render functions receive the encapsulated property, most of the time they
 will want to unwrap it first. E.g. from the implementation of 'date':
   return date($args[0], $property->raw());
 
-The output of a render function will automatically be wrapped in a Property 
-object before it is returned by the dispatcher; this allows us to chain render
-method calls.
+The output of a render function will automatically be wrapped in a Property or
+PropertyList object, if it isn't already; this allows us to chain render method 
+calls.
 
  ========
  = TODO =
@@ -183,8 +183,5 @@ TODO: plan a thorough approach to escaping: do we really want to call htmlentiti
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
 TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope)
 TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
-TODO: clean up View.php
 TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
-FIXME: it's not nice that render functions are asymmetric in their interface: they receive properties, but emit raw values which then get wrapped into properties by the render dispatcher. This is somewhat convenient because renderer implementations don't need to explicitly wrap, but will likely confuse implementers because of its inconsistency.
 FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped result.)
-FIXME: we probably have no need to make a distinction between current PropertyList and Model classes -> merge them. Then rename 'Property*' to 'Field*', and have the Model take care of both namespace sandboxing and Field vs FieldList encapsulation of variables, depending on type
