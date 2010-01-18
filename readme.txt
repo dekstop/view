@@ -144,11 +144,11 @@ Checking the value of a property requires a small detour. This is a direct
 effect of our main design goal (secure output via encapsulation of properties.)
 
 For convenience properties have methods to check for boolean/null values:
-  <?= $item.name.is_null() ? "Not provided" : $item.name ?>
-  <?= $item.flag.is_true() ? "Yes" : "No" ?>
+  <?= $item->name->is_null() ? "Not provided" : $item->name ?>
+  <?= $item->flag->is_true() ? "Yes" : "No" ?>
 
 To compare with specific values use the 'raw' renderer for now:
-  <? if ($name.raw()=="Jef") { ?>Hello Buddy!<? } ?>
+  <? if ($name->raw()=="Jef") { ?>Hello Buddy!<? } ?>
 
 In some cases you might be able to get away with treating properties as strings
 in your comparisons and skipping the conversion to 'raw', but at minimum this 
