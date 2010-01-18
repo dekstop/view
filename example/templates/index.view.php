@@ -31,6 +31,11 @@
   <td><?= $vars->null->default('Not provided') ?></td>
 </tr>
 <tr>
+  <td><tt>truncate</tt></td>
+  <td><tt>$string->truncate(10)</tt></td>
+  <td><?= $vars->string->truncate(10) ?></td>
+</tr>
+<tr>
   <td><tt>format</tt></td>
   <td><tt>$float->format('%.2f')</tt></td>
   <td><?= $vars->float->format('%.2f') ?></td>
