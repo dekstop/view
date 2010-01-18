@@ -35,8 +35,8 @@
       padding: 2px;
     }
     pre {
-      color:#000000;
-      background-color:#ffeeee;
+      color: #000000;
+      background-color: #ffeeee;
       margin-top: 0;
       padding-top: 0;
       margin-right: 0;
@@ -49,7 +49,13 @@
       overflow: auto;
     }
     div#main {
-      max-width:850px;
+      max-width: 850px;
+    }
+    .unsafe {
+      font-size: 0.8em;
+      font-weight: bold;
+      padding: 3px;
+      color: #ff3333;
     }
   </style>
 </head>
