@@ -18,7 +18,7 @@
 <? } ?>
 </table>
 
-<p>Some examples of using custom renderer functions:</p>
+<p>Some examples of using render functions:</p>
 <table border="0">
 <tr>
   <th>Renderer</th>
@@ -26,9 +26,19 @@
   <th>Display</th>
 </tr>
 <tr>
+  <td><tt>default</tt></td>
+  <td><tt>$empty_variable->default('Not provided')</tt></td>
+  <td><?= $vars->null->default('Not provided') ?></td>
+</tr>
+<tr>
+  <td><tt>format</tt></td>
+  <td><tt>$float->format('%.2f')</tt></td>
+  <td><?= $vars->float->format('%.2f') ?></td>
+</tr>
+<tr>
   <td><tt>date</tt></td>
   <td><tt>$timestamp->date('Y-m-d')</tt></td>
-  <td><?= $vars->number->date('Y-m-d') ?></td>
+  <td><?= $vars->int->date('Y-m-d') ?></td>
 </tr>
 <tr>
   <td><tt>json</tt> on lists</td>
@@ -43,7 +53,7 @@
 <tr>
   <td><tt>date</tt> + <tt>json</tt></td>
   <td><tt>$timestamp->date('Y-m-d')->json()</tt></td>
-  <td><?= $vars->number->date('Y-m-d')->json() ?></td>
+  <td><?= $vars->int->date('Y-m-d')->json() ?></td>
 </tr>
 </table>
 
@@ -61,18 +71,22 @@
 <? } ?>
 </table>
 
-<p>Preventing HTML escaping of values (dangerous!):</p>
+<p>Handling HTML strings:</p>
 <table border="0">
 <tr>
   <th>Example</th>
   <th>Display</th>
 </tr>
 <tr>
-  <td><tt>$var</tt></td>
+  <td><tt>$html_string</tt></td>
   <td><?= $vars->string ?></td>
 </tr>
 <tr>
-  <td><tt>$var->raw()</tt></td>
+  <td><tt>$html_string->strip_tags()</tt></td>
+  <td><?= $vars->string->strip_tags() ?></td>
+</tr>
+<tr>
+  <td><tt>$html_string->raw()</tt> (dangerous!)</td>
   <td><?= $vars->string->raw() ?></td>
 </tr>
 </table>
@@ -82,7 +96,7 @@
 <? if ($pleaseCrashMe->is_true()) { ?>
 <p>This is what happens when a template calls a render function that View.php fails to find in the include path: It will throw an Exception.</p>
 <pre>
-<?= $vars->number->this_renderer_does_not_exist() ?>
+<?= $vars->int->this_renderer_does_not_exist() ?>
 </pre>
 <? } ?>
 

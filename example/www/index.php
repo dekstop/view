@@ -7,7 +7,8 @@ $model = new Model(); // could also provide a map of properties to constructor
 $model->title = 'View.php – A Basic Example';
 
 $model->vars = array(); // map of properties
-$model->vars['number'] = 1234567890;
+$model->vars['int'] = 1234567890;
+$model->vars['float'] = 1/3;
 $model->vars['string'] = "<b>this is bold</b>";
 $model->vars['boolean'] = false;
 $model->vars['array'] = array(1, 2, 'abc');

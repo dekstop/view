@@ -50,7 +50,7 @@ class UnitTests extends TestSuite {
     // (PHP directory walking is generally horrible.)
     $it = new RecursiveDirectoryIterator($VIEW_LIB_ROOT);
     foreach (new RecursiveIteratorIterator($it) as $filename=>$cur) {
-      if (preg_match('/.*\.test\.php/', $filename)) {
+      if (mb_ereg_match('.*\.test\.php', $filename)) {
         $this->addFile($filename);
       }
     }

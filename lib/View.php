@@ -1,5 +1,7 @@
 <?
 
+ini_set('mbstring.internal_encoding', 'UTF-8'); // Sorry for this, but anything else is madness.
+
 $VIEW_LIB_DIR = dirname(__FILE__) . '/view';
 $RENDERER_LIB_DIR = dirname(__FILE__) . '/view/renderers';
 set_include_path(get_include_path() . PATH_SEPARATOR . $VIEW_LIB_DIR);

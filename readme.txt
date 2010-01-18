@@ -5,6 +5,9 @@ View.php: a simple PHP template engine
 Requirements: 
 - PHP 5.2
 
+Caveats:
+- Note that View.php sets mbstring.internal_encoding to UTF-8
+
  ================
  = Introduction =
  ================
@@ -177,8 +180,7 @@ calls.
  = TODO =
  ========
 
-TODO: more essential renderers: default, format (sprintf), strip_tags, strip, truncate, 
-TODO: more useful renderers: capitalize, lower, upper, wordwrap, regex_replace, replace, 
+TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
 TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? -> write global customisable escaping function, with unit tests using misc malicious markup
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
 TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope)
