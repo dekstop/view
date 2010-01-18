@@ -113,9 +113,9 @@ array_keys($my_propertylist) is unsafe for display. List render functions are
 obviously free to output keys, but it is their responsibility to ensure that 
 this is safe. 
 
-I realise that this is not acceptable, and I violate this in one of my own 
-examples. We might change this behaviour in the future, but I'm not convinced 
-that it's actually possible. Cf. http://bugs.php.net/bug.php?id=45684
+This clearly is not acceptable, so we might change this behaviour in the 
+future, but I'm not convinced that it's actually possible. Cf. 
+http://bugs.php.net/bug.php?id=45684
 
 
 2. Render Functions Control the Display of Property Values
