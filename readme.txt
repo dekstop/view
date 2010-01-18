@@ -162,12 +162,12 @@ Render functions are PHP functions that adhere to a couple of conventions.
 You may already know the general approach from other frameworks. 
 
 For a Property render function called 'date':
-* Example use: <? $item->date('Y-m-d') ?>
+* Example use: <?= $item->date('Y-m-d') ?>
 * PHP function name: 'date_renderer'
 * PHP filename: 'date.renderer.php'
 
 For a PropertyList render function called 'implode':
-* Example use: <? $list->implode(', ') ?>
+* Example use: <?= $list->implode(', ') ?>
 * PHP function name: 'implode_list_renderer'
 * PHP filename: 'implode.list_renderer.php'
 
