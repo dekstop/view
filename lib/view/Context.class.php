@@ -4,9 +4,9 @@
  * either array (map) or object syntax. Values will be wrapped in Property or
  * PropertyList objects.
  */
-class Model extends PropertyList {
+class Context extends PropertyList {
   
-  public function Model($d = array()) {
+  public function Context($d = array()) {
     parent::__construct($d);
   }
 

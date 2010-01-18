@@ -12,8 +12,8 @@ class View {
     return $this->templateDir . '/' . $template . '.view.php';
   }
   
-  function display($__template, $__model) {
-    foreach ($__model as $k=>$v) {
+  function display($__template, $__ctx) {
+    foreach ($__ctx as $k=>$v) {
       $$k = $v; // load variables in local scope
     }
     $fn = $this->_getTemplateFilename($__template);

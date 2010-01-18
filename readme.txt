@@ -47,11 +47,11 @@ Martin Dittus, martin@dekstop.de
 index.php:
   <?
   require_once('../lib/View.php');
-  $model = new Model();
-  $model->message = 'My Blog Post'; // set some properties
-  $model->timestamp = time();
+  $ctx = new Context();
+  $ctx->message = 'My Blog Post'; // set some properties
+  $ctx->timestamp = time();
   $view = new View();
-  $view->display('index', $model);
+  $view->display('index', $ctx);
   ?>
   
 index.view.php:
@@ -78,7 +78,7 @@ Here's the full example on the interwebs:
  ===========
 
 You hand data to your template by populating a map of named properties within
-a Model object; these properties will be made available to the template as 
+a Context object; these properties will be made available to the template as 
 local variables. 
 
 This more or less describes the entire mechanism; but of course there's also
@@ -87,7 +87,7 @@ a bit of magic involved.
 
 1. View.php Will Wrap Property and PropertyList Objects Around All Your Values
 
-All data passed to display templates via the Model class gets encapsulated in
+All data passed to display templates via the Context class gets encapsulated in
 Property/PropertyList objects. This helps making sure that all output is always 
 properly quoted for HTML display, and is used as dispatch mechanism for render 
 function calls.
