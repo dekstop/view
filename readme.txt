@@ -191,7 +191,6 @@ calls.
  = TODO =
  ========
 
-TODO: explore the option of using output buffers for a lightweight preprocessor. does it still touch disk? what's the performance impact? (RJ brought this one up.)
 TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
 TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? -> write global customisable escaping function, with unit tests using misc malicious markup
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
