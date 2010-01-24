@@ -53,6 +53,29 @@ class PropertyTest extends UnitTestCase {
     $this->expectException();
     $p->renderer_which_does_not_exist();
   }
+
+  function test_is_array() {
+    $p = new Property(null);
+    $this->assertEqual(false, $p->is_array());
+    $p = new Property(false);
+    $this->assertEqual(false, $p->is_array());
+    $p = new Property(1234567890);
+    $this->assertEqual(false, $p->is_array());
+    $p = new Property('1234567890');
+    $this->assertEqual(false, $p->is_array());
+  }
+
+  function test_is_empty() {
+    $p = new Property(null);
+    $this->assertEqual(true, $p->is_empty());
+    $p = new Property(false);
+    $this->assertEqual(false, $p->is_empty());
+    $p = new Property(1234567890);
+    $this->assertEqual(false, $p->is_empty());
+    $p = new Property('1234567890');
+    $this->assertEqual(false, $p->is_empty());
+  }
+
 }
 
 ?>

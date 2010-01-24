@@ -110,6 +110,37 @@ class PropertyListTest extends UnitTestCase {
     $this->expectException();
     $p->renderer_which_does_not_exist();
   }
+
+  function test_is_null() {
+    $p = new PropertyList();
+    $this->assertEqual(false, $p->is_null());
+    $p = new PropertyList(array());
+    $this->assertEqual(false, $p->is_null());
+    $p = new PropertyList(array(null));
+    $this->assertEqual(false, $p->is_null());
+  }
+
+  function test_is_array() {
+    $p = new PropertyList();
+    $this->assertEqual(true, $p->is_array());
+    $p = new PropertyList(array(null));
+    $this->assertEqual(true, $p->is_array());
+    $p = new PropertyList(array('a'=>1));
+    $this->assertEqual(true, $p->is_array());
+  }
+
+  function test_is_empty() {
+    $p = new PropertyList();
+    $this->assertEqual(true, $p->is_empty());
+    $p = new PropertyList(array());
+    $this->assertEqual(true, $p->is_empty());
+    $p = new PropertyList(array(null));
+    $this->assertEqual(false, $p->is_empty());
+    $p = new PropertyList(array(false));
+    $this->assertEqual(false, $p->is_empty());
+    $p = new PropertyList(array(1234567890=>'sdfa'));
+    $this->assertEqual(false, $p->is_empty());
+  }
 }
 
 ?>

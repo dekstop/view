@@ -122,5 +122,24 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
 
   // Countable function
   public function count() { return count($this->data); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_null() { return is_null($this->data); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_array() { return is_array($this->data); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_empty() { 
+    return 
+      self::is_null() ||
+      (self::is_array() && count($this->data)==0); 
+  }
 }
 ?>
