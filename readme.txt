@@ -176,7 +176,7 @@ path. If a renderer's PHP file cannot be loaded View.php will throw an
 Exception.
 
 Render functions will receive two arguments:
-* the Property or PropertyList object
+* the Property or PropertyList object that is being rendered
 * an array of all arguments of the render function call
 
 Since render functions receive the encapsulated property, most of the time they 
@@ -192,9 +192,9 @@ calls.
  ========
 
 TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
-TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? -> write global customisable escaping function, with unit tests using misc malicious markup
+TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? how can we prevent escaping of sanitised HTML strings? -> write global customisable escaping function, with unit tests using misc malicious markup
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
 TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope)
 TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
 TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
-FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped result.)
+FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped imploded result.)
