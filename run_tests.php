@@ -1,4 +1,7 @@
 <?
+/**
+ * This script will run all unit tests using SimpleTest.
+ */
 
 $VIEW_LIB_ROOT = './lib';
 
@@ -14,13 +17,8 @@ class RendererUnitTestCase extends UnitTestCase {
   function render($property_value, $renderer_name) {
     $r = RendererLoader::get_renderer($renderer_name);
     $p = Sandbox::wrap($property_value);
-    $args = array();
-    if (count(func_get_args())>2) {
-      // we have varargs
-      $args = func_get_args();
-      $args = array_slice($args, 2);
-    }
-    return $r($p, $args);
+    $a = array_slice(func_get_args(), 2);
+    return $r($p, $a);
   }  
   
   /**
@@ -30,13 +28,8 @@ class RendererUnitTestCase extends UnitTestCase {
   function render_list($property_value, $renderer_name) {
     $r = RendererLoader::get_list_renderer($renderer_name);
     $p = Sandbox::wrap($property_value);
-    $args = array();
-    if (count(func_get_args())>2) {
-      // we have varargs
-      $args = func_get_args();
-      $args = array_slice($args, 2);
-    }
-    return $r($p, $args);
+    $a = array_slice(func_get_args(), 2);
+    return $r($p, $a);
   }
 }
 
