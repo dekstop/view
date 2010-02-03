@@ -6,6 +6,8 @@
 
 <p>This example page illustrates View.php's approach to rendering page content. Check out the project on GitHub for the controller and template <a href="http://github.com/dekstop/view/tree/master/example/">source code</a> for this document.</p>
 
+<p><small>View.php was created by <a href="http://dekstop.de/">martind</a>. This page was rendered at <?= $now->date('Y-m-d H:i e') ?></small></p>
+
 <!--
 
 Note: The aim of this document is to demonstrate some of View.php's inner 

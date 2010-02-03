@@ -70,7 +70,7 @@ root, or just create a symlink to <View.php root>/example/www, and then open
 Here's the full example on the interwebs:
 * controller: http://github.com/dekstop/view/blob/master/example/www/index.php
 * view: http://github.com/dekstop/view/blob/master/example/templates/index.view.php
-* output: http://mardoen.textdriven.com/temp/view_php_basic_example-2010-01-17.html
+* output: http://mardoen.textdriven.com/temp/view_php_basic_example.html
 
 
  ===========

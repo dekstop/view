@@ -15,6 +15,8 @@ $ctx->vars['boolean'] = false;
 $ctx->vars['list'] = array(1, 10, 100, 1000, 100000, 1000000);
 $ctx->vars->list[] = 10000000; // append to list
 
+$ctx->now = time();
+
 $ctx->pleaseCrashMe = true; // we will use this as a flag
 
 // display
