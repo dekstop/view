@@ -24,6 +24,7 @@
     table {
       border-collapse: collapse;
       border: 3px solid #cccccc;
+      margin-bottom: 2.5em;
     }
     table th {
       border: 1px dotted gray;
@@ -36,17 +37,19 @@
     }
     pre {
       color: #000000;
-      background-color: #ffeeee;
       margin-top: 0;
       padding-top: 0;
       margin-right: 0;
-      padding-right: 1em;
       margin-bottom: 0;
       padding-bottom: 0;
       margin-left: 0;
-      padding-left: 1em;
       width: 100%;
       overflow: auto;
+    }
+    pre.error {
+      background-color: #ffeeee;
+      padding-right: 1em;
+      padding-left: 1em;
     }
     div#main {
       max-width: 850px;
