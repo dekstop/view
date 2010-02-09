@@ -191,10 +191,11 @@ calls.
  = TODO =
  ========
 
+TODO: rename Property/PropertyList/PropertyObject to: ScalarProperty, ListProperty, ObjectProperty; all implement interface Property
 TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
 TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? how can we prevent escaping of sanitised HTML strings? -> write global customisable escaping function, with unit tests using misc malicious markup
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
-TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope)
+TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope. These variables will automatically get wrapped in Property/PropertyList objects.)
 TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
 TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
 FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped imploded result.)

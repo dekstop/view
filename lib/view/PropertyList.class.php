@@ -4,7 +4,7 @@
  * or object syntax, and which can be iterated over. Values are wrapped in 
  * Property or PropertyList objects when they're added.
  */
-class PropertyList implements ArrayAccess, Iterator, Countable {
+class PropertyList implements Countable, ArrayAccess, Iterator {
   private $data = array();
   private $idx = 0;
   
@@ -14,6 +14,67 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
     }
   }
   
+  /**
+   * Bypass default display renderer.
+   */
+  public function raw() {
+    $r = array();
+    foreach ($this->data as $k=>$v) {
+      $r[$k] = Sandbox::unwrap($v);
+    }
+    return $r;
+  }
+  
+  /**
+   * Simply for convenience. Returns a comma-separated list of all values.
+   */
+  public function __toString() {
+    return implode(', ', array_values($this->data));
+  }
+  
+  /**
+   * Dispatcher for user-defined list renderers.
+   */
+  public function __call($name, $args=null) {
+    $r = RendererLoader::get_list_renderer($name);
+    return Sandbox::wrap($r($this, $args));
+  }
+  
+  public function values() {
+    return array_values($this->data);
+  }
+
+  // public function keys() {
+  //   $r = array();
+  //   foreach (array_keys($this->data) as $k) {
+  //     $r[] = Sandbox::wrap($k);
+  //   }
+  //   return $r;
+  // }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_null() { return is_null($this->data); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_array() { return is_array($this->data); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
+  public function is_empty() { 
+    return 
+      self::is_null() ||
+      (self::is_array() && count($this->data)==0); 
+  }
+  
+  // Countable function
+  public function count() { return count($this->data); }
+  
+  // ArrayAccess functions
   /**
    * $my_propertylist['a'] = $value
    */
@@ -58,44 +119,6 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
   public function __get($key) { 
     return $this[$key];
   }
-  
-  /**
-   * Bypass default display renderer.
-   */
-  public function raw() {
-    $r = array();
-    foreach ($this->data as $k=>$v) {
-      $r[$k] = Sandbox::unwrap($v);
-    }
-    return $r;
-  }
-  
-  public function values() {
-    return array_values($this->data);
-  }
-
-  // public function keys() {
-  //   $r = array();
-  //   foreach (array_keys($this->data) as $k) {
-  //     $r[] = Sandbox::wrap($k);
-  //   }
-  //   return $r;
-  // }
-  
-  /**
-   * Simply for convenience. Returns a comma-separated list of all values.
-   */
-  public function __toString() {
-    return implode(', ', array_values($this->data));
-  }
-  
-  /**
-   * Dispatcher for user-defined list renderers.
-   */
-  public function __call($name, $args=null) {
-    $r = RendererLoader::get_list_renderer($name);
-    return Sandbox::wrap($r($this, $args));
-  }
 
   // Iterator functions
   function rewind() {
@@ -118,28 +141,6 @@ class PropertyList implements ArrayAccess, Iterator, Countable {
 
   function next() {
     $this->idx++;
-  }
-
-  // Countable function
-  public function count() { return count($this->data); }
-  
-  /**
-   * For use as flag in display logic control structures.
-   */
-  public function is_null() { return is_null($this->data); }
-  
-  /**
-   * For use as flag in display logic control structures.
-   */
-  public function is_array() { return is_array($this->data); }
-  
-  /**
-   * For use as flag in display logic control structures.
-   */
-  public function is_empty() { 
-    return 
-      self::is_null() ||
-      (self::is_array() && count($this->data)==0); 
   }
 }
 ?>

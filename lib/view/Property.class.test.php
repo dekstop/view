@@ -43,9 +43,9 @@ class PropertyTest extends UnitTestCase {
   }
 
   function test_chained_renderers() {
-    $p = new Property(1234567890);
-    $this->assertEqual('2009-02-13 <', $p->date('Y-m-d <')->raw());
-    $this->assertEqual('2009-02-13 &lt;', $p->date('Y-m-d <')->htmlentities()->raw());
+    $p = new Property('1234567890');
+    $this->assertEqual('12345', $p->truncate(5, '')->raw());
+    $this->assertEqual('1234', $p->truncate(5, '')->truncate(4, '')->raw());
   }
 
   function test_unknown_renderer_exception() {

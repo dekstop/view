@@ -1,5 +1,8 @@
 <?
 
+// TODO: how can we ensure that this is not affected by system timezone?
+// (we should always assume UTC)
+// atm tests seem to fail in non-UTC timezones...?!
 function date_renderer($property, $args) {
   if ($property->is_null()) return null;
 

@@ -1,6 +1,6 @@
 <?
 /**
- * A container for a single property, responsible for making its value
+ * A container for a single scalar, responsible for making its value
  * available for display. The default renderer attempts to sanitise
  * for HTML output (incl. type conversion and character escaping.)
  *
@@ -75,9 +75,9 @@ class Property {
    */
   public function is_empty() { 
     return 
-      (self::is_null()) ||
-      (self::is_array() && count($this->value)==0) ||
-      (self::is_empty_string($this->value)); 
+      ($this->is_null()) ||
+      ($this->is_array() && count($this->value)==0) ||
+      ($this->is_empty_string()); 
   }
 }
 ?>
