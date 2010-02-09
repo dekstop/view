@@ -1,4 +1,7 @@
 <?
+
+require_once('Property.interface.php');
+
 /**
  * A container for a single scalar, responsible for making its value
  * available for display. The default renderer attempts to sanitise
@@ -10,11 +13,11 @@
  * Additionally this class offers basic checks for use in display logic 
  * control structures.
  */
-class Property {
+class ScalarProperty implements Property {
   
   private $value = null;
   
-  public function Property($value) { 
+  public function ScalarProperty($value) { 
     $this->value = $value; 
   }
   

@@ -1,14 +1,17 @@
 <?
+
+require_once('Property.interface.php');
+
 /**
  * A container for lists of properties, which can be accessed using array (map)
  * or object syntax, and which can be iterated over. Values are wrapped in 
- * Property or PropertyList objects when they're added.
+ * Property instances when they're added.
  */
-class PropertyList implements Countable, ArrayAccess, Iterator {
+class ListProperty implements Property, Countable, ArrayAccess, Iterator {
   private $data = array();
   private $idx = 0;
   
-  public function PropertyList($data=array()) {
+  public function ListProperty($data=array()) {
     foreach ($data as $k=>$v) {
       $this->data[$k] = Sandbox::wrap($v);
     }
@@ -76,45 +79,45 @@ class PropertyList implements Countable, ArrayAccess, Iterator {
   
   // ArrayAccess functions
   /**
-   * $my_propertylist['a'] = $value
+   * $my_listproperty['a'] = $value
    */
   public function offsetSet($key, $value) {
-    if (is_null($key)) { // array append syntax used? e.g. $my_propertylist[] = $value
+    if (is_null($key)) { // array append syntax used? e.g. $my_listproperty[] = $value
       $key = count($this->data);
     }
     $this->data[$key] = Sandbox::wrap($value);
   }
 
   /**
-   * $value = $my_propertylist['a']
+   * $value = $my_listproperty['a']
    */
   public function offsetGet($key) {
     return $this->data[$key];
   }
   
   /**
-   * isset($my_propertylist['a'])
+   * isset($my_listproperty['a'])
    */
   public function offsetExists($key) {
     return isset($this->data[$key]);
   }
   
   /**
-   * unset($my_propertylist['a'])
+   * unset($my_listproperty['a'])
    */
   public function offsetUnset($key) {
     unset($this->data[$key]);
   }
 
   /**
-   * $my_propertylist->a = 123
+   * $my_listproperty->a = 123
    */
   public function __set($key, $value) {
     $this[$key] = Sandbox::wrap($value);
   }
   
   /**
-   * $value = $my_propertylist->a
+   * $value = $my_listproperty->a
    */
   public function __get($key) { 
     return $this[$key];

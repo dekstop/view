@@ -1,5 +1,7 @@
 <?
 
+require_once('Property.interface.php');
+
 /**
  * A container for a single object, which provides access to its public 
  * properties and methods.
@@ -8,11 +10,11 @@
  * will want to print objects themselves. Instead they're seen as a means to
  * access/construct printable properties.
  */
-class PropertyObject {
+class ObjectProperty implements Property {
   
   private $obj;
   
-  public function PropertyObject($obj) { 
+  public function ObjectProperty($obj) { 
     $this->obj = $obj; 
   }
   
@@ -42,14 +44,14 @@ class PropertyObject {
   }
   
   /**
-   * $my_propertyobj->a = 123
+   * $my_objectproperty->a = 123
    */
   public function __set($key, $value) {
     $this->obj->$key = Sandbox::unwrap($value);
   }
   
   /**
-   * $value = $my_propertyobj->a
+   * $value = $my_objectproperty->a
    */
   public function __get($key) { 
     return Sandbox::wrap($this->obj->$key);

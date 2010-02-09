@@ -85,31 +85,45 @@ This more or less describes the entire mechanism; but of course there's also
 a bit of magic involved.
 
 
-1. View.php Will Wrap Property and PropertyList Objects Around All Your Values
+1. View.php Will Wrap Property Objects Around All Your Values
 
 All data passed to display templates via the Context class gets encapsulated in
-Property/PropertyList objects. This helps making sure that all output is always 
-properly quoted for HTML display, and is used as dispatch mechanism for render 
-function calls.
+implementations of the Property interface. This helps making sure that all 
+output is always properly quoted for HTML display, and is used as dispatch 
+mechanism for render function calls.
 
-Property objects can generally be regarded as escaped strings, independent of 
-their encapsulated type.
+Your scalar properties get wrapped in instances of the ScalarProperty class. 
+These can generally be regarded as escaped strings, independent of their 
+encapsulated type.
   <?= $my_property ?>
 
-PropertyList objects can generally be regarded as arrays. They can be 
-count()ed, iterated over, their elements addressed via array/map index or as 
-object fields, but they're not native arrays.
+Your array properties get wrapped in instances of the ListProperty class. These
+can generally be regarded as arrays. They can be count()ed, iterated over, 
+their elements addressed via array/map index or as object fields, but they're 
+not actually native arrays.
   <ul>
   <? foreach ($my_items as $item) { ?>
     <li><?= $item->name ?></li>
   <? } ?>
   </ul>
 
+Objects get wrapped in ObjectProperty instances. These can generally be 
+treated just like the object they wrap. You can access public fields, and call 
+public methods. It is assumed that you will never display your objects 
+directly, only their properties and method return values.
+  <? if ($my_object->has_result()) { ?>
+    <?= $my_object->result ?>
+    <?= $my_object->getValue($t) ?>
+  <? } ?>
+
 As you can see control flow is usually very close to native PHP.
 
+
+Implementation detail:
+
 Note that we assume that we will never display array keys, only their values. 
-E.g. we ignore keys in PropertyList::__toString(), and the output of
-array_keys($my_propertylist) is unsafe for display. List render functions are
+E.g. we ignore keys in ListProperty::__toString(), and the output of
+array_keys($my_listproperty) is unsafe for display. List render functions are
 obviously free to output keys, but it is their responsibility to ensure that 
 this is safe. 
 
@@ -122,15 +136,15 @@ http://bugs.php.net/bug.php?id=45684
 
 You call user-defined render functions to convert a property's encapsulated 
 value into different representations. There are two kinds of render 
-functions: Property renderers, and PropertyList renderers. 
+functions: ScalarProperty renderers, and ListProperty renderers. 
 
-Here's a Property renderer which displays a timestamp as date string:
+Here's a ScalarProperty renderer which displays a timestamp as date string:
   <?= $timestamp->date('Y-m-d') ?>
 
 You can chain renderers:
   <?= $timestamp->date('Y-m-d')->json() ?>
 
-Here's a PropertyList renderer which concatenates a list of items:
+Here's a ListProperty renderer which concatenates a list of items:
   <?= $tags->implode(', ') ?>
 
 The default renderer will always implicitly be called last, and takes care
@@ -161,12 +175,12 @@ that you avoid this.
 Render functions are PHP functions that adhere to a couple of conventions.
 You may already know the general approach from other frameworks. 
 
-For a Property render function called 'date':
+For a ScalarProperty render function called 'date':
 * Example use: <?= $item->date('Y-m-d') ?>
 * PHP function name: 'date_renderer'
 * PHP filename: 'date.renderer.php'
 
-For a PropertyList render function called 'implode':
+For a ListProperty render function called 'implode':
 * Example use: <?= $list->implode(', ') ?>
 * PHP function name: 'implode_list_renderer'
 * PHP filename: 'implode.list_renderer.php'
@@ -176,26 +190,24 @@ path. If a renderer's PHP file cannot be loaded View.php will throw an
 Exception.
 
 Render functions will receive two arguments:
-* the Property or PropertyList object that is being rendered
+* the ScalarProperty or ListProperty object that is being rendered
 * an array of all arguments of the render function call
 
 Since render functions receive the encapsulated property, most of the time they 
 will want to unwrap it first. E.g. from the implementation of 'date':
   return date($args[0], $property->raw());
 
-The output of a render function will automatically be wrapped in a Property or
-PropertyList object, if it isn't already; this allows us to chain render method 
-calls.
+The output of a render function will automatically be wrapped in a Property 
+instance, if it isn't already; this allows us to chain render method calls.
 
  ========
  = TODO =
  ========
 
-TODO: rename Property/PropertyList/PropertyObject to: ScalarProperty, ListProperty, ObjectProperty; all implement interface Property
 TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
 TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? how can we prevent escaping of sanitised HTML strings? -> write global customisable escaping function, with unit tests using misc malicious markup
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
-TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope. These variables will automatically get wrapped in Property/PropertyList objects.)
+TODO: implement fragments (like includes, but with no access to template vars, instead they get passed a map of variables to be imported in local scope. These variables will automatically get wrapped in Property instances.)
 TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
 TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
 FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped imploded result.)
