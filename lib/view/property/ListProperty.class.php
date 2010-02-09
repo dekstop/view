@@ -58,6 +58,11 @@ class ListProperty implements Property, Countable, ArrayAccess, Iterator {
   /**
    * For use as flag in display logic control structures.
    */
+  public function equals($other) { return $this->data==Sandbox::unwrap($other); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
   public function is_null() { return is_null($this->data); }
   
   /**

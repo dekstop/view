@@ -161,8 +161,8 @@ For convenience properties have methods to check for boolean/null values:
   <?= $item->name->is_null() ? "Not provided" : $item->name ?>
   <?= $item->flag->is_true() ? "Yes" : "No" ?>
 
-To compare with specific values use the 'raw' renderer for now:
-  <? if ($name->raw()=="Jef") { ?>Hello Buddy!<? } ?>
+To compare with specific values use the 'equals' renderer:
+  <? if ($name->equals("Jef")) { ?>Hello Buddy!<? } ?>
 
 In some cases you might be able to get away with treating properties as strings
 in your comparisons and skipping the conversion to 'raw', but at minimum this 

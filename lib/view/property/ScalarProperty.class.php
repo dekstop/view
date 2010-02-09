@@ -51,6 +51,11 @@ class ScalarProperty implements Property {
   /**
    * For use as flag in display logic control structures.
    */
+  public function equals($other) { return $this->value==Sandbox::unwrap($other); }
+  
+  /**
+   * For use as flag in display logic control structures.
+   */
   public function is_true() { return $this->value===TRUE; }
   
   /**
