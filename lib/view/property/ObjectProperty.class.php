@@ -9,6 +9,12 @@ require_once('Property.interface.php');
  * The default renderer just throws an exception; it is not expected that you 
  * will want to print objects themselves. Instead they're seen as a means to
  * access/construct printable properties.
+ *
+ * There's one additional bit of syntactic sugar to make it more convenient to 
+ * access properties: ObjectProperty will redirect read access of named 
+ * properties to a function call if there is no public property of that name.
+ * I.e., trying to read the non-existent $my_object_property->myField will 
+ * result in a call to $my_object_property->getMyField() instead.
  */
 class ObjectProperty implements Property {
   
@@ -54,7 +60,11 @@ class ObjectProperty implements Property {
    * $value = $my_objectproperty->a
    */
   public function __get($key) { 
-    return Sandbox::wrap($this->obj->$key);
+    if (array_key_exists($key, get_object_vars($this->obj))) {
+      return Sandbox::wrap($this->obj->$key);
+    }
+    $accessor_method = 'get' . $key;
+    return $this->obj->$accessor_method();
   }
   
   /**
