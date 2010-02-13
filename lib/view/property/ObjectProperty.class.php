@@ -63,7 +63,10 @@ class ObjectProperty implements Property {
     if (array_key_exists($key, get_object_vars($this->obj))) {
       return Sandbox::wrap($this->obj->$key);
     }
-    $accessor_method = 'get' . $key;
+    # No such property -> call a getter method instead.
+    # Note that in PHP function names are case insensitive, so it doesn't matter if
+    # we call ->getx() or ->getX() (The same is not true for variable names.)
+    $accessor_method = 'get' . $key; 
     return Sandbox::wrap($this->obj->$accessor_method());
   }
   
