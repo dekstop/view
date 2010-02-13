@@ -93,6 +93,11 @@ class ObjectPropertyTest extends UnitTestCase {
     $p = new ObjectProperty(new ClassWithProperties());
     $this->assertEqual(false, $p->is_null());
   }
+
+  function test_getter_method_redirect() {
+    $p = new ObjectProperty(new ClassWithMethods());
+    $this->assertEqual(1, $p->one->raw()); # redirects to $p->getOne()
+  }
 }
 
 ?>
