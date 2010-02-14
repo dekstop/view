@@ -15,6 +15,13 @@ class ViewHelper {
   public function fragment($name, $params=array()) {
     return new FragmentGenerator($this->_templateDir, Sandbox::unwrap($name), Sandbox::unwrap($params));
   }
+  
+  /**
+   * Alias for fragment($name, $params)
+   */
+  public function display($name, $params=array()) {
+    return $this->fragment($name, $params);
+  }
 }
 
 ?>

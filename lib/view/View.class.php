@@ -37,7 +37,7 @@ class View {
   }
   
   private function _getFragmentFilename($template) {
-    return $this->templateDir . '/' . $template . '.fragment.php';
+    return $this->templateDir . '/_' . $template . '.view.php';
   }
 }
 
