@@ -1,4 +1,4 @@
-<? include('header.php') ?>
+<?= $view->fragment('header')->title($title) ?>
 
 <h1><?= $title ?></h1>
 
@@ -147,4 +147,4 @@ variables.
 </pre>
 <? } ?>
 
-<? include('footer.php') ?>
+<? $view->fragment('footer') ?>

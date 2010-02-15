@@ -12,4 +12,8 @@ require_once('View.class.php');
 require_once('RendererLoader.class.php');
 require_once('Sandbox.class.php');
 
+require_once('generators/Generator.class.php');
+require_once('generators/FragmentGenerator.class.php');
+require_once('ViewHelper.class.php');
+
 ?>
