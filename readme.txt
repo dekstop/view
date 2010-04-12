@@ -189,16 +189,18 @@ The PHP file containing the render function must be accessible via the include
 path. If a renderer's PHP file cannot be loaded View.php will throw an 
 Exception.
 
-Render functions will receive two arguments:
+Render functions will receive three arguments:
 * the ScalarProperty or ListProperty object that is being rendered
+* an Encoder instance, to build strings that are safe for display
 * an array of all arguments of the render function call
 
 Since render functions receive the encapsulated property, most of the time they 
-will want to unwrap it first. E.g. from the implementation of 'date':
-  return date($args[0], $property->raw());
+will want to unwrap it first.
+  $property->raw()
 
-The output of a render function will automatically be wrapped in a Property 
+The output of a render function then needs to be wrapped in a Property 
 instance, if it isn't already; this allows us to chain render method calls.
+  Sandbox::wrap($my_value, $encoder)
 
  ========
  = TODO =
