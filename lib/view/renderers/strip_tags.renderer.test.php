@@ -13,7 +13,7 @@ class StripTagsRendererTest extends RendererUnitTestCase {
   }
 
   function test_null() {
-   $this->assertEqual(null, $this->render(null, 'strip_tags'));
+   $this->assertTrue($this->render(null, 'strip_tags')->is_null());
   }
 
   function test_empty_string() {

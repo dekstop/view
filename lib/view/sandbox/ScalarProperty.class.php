@@ -4,21 +4,29 @@ require_once('Property.interface.php');
 
 /**
  * A container for a single scalar, responsible for making its value
- * available for display. The default renderer attempts to sanitise
- * for HTML output (incl. type conversion and character escaping.)
+ * available for display. The default renderer just calls 
+ * $encoder->encode($value)
  *
  * Custom renderers, once registered, can simply be called by their name: 
  * $my_property->my_renderer();
  *
  * Additionally this class offers basic checks for use in display logic 
  * control structures.
+ *
+ * This class should never be instantiated directly.
  */
 class ScalarProperty implements Property {
   
   private $value = null;
+  private $encoder = null;
   
-  public function ScalarProperty($value) { 
-    $this->value = $value; 
+  public function ScalarProperty($value, $encoder) { 
+    $this->value = $value;
+    $this->encoder = $encoder;
+  }
+  
+  public function getEncoder() {
+    return $this->encoder;
   }
   
   /**
@@ -29,15 +37,10 @@ class ScalarProperty implements Property {
   }
   
   /**
-   * Default display renderer.
+   * Returns the result of calling $encoder->encode($value)
    */
   public function __toString() { 
-    if ($this->is_null()) return 'null';
-    if ($this->is_true()) return 'true';
-    if ($this->is_false()) return 'false';
-    // For now we'll just blindly treat every other value as a string.
-    // May add more special cases for other types/classes later.
-    return htmlentities($this->value, ENT_QUOTES, 'UTF-8');
+    return $this->encoder->encode($this->value);
   }
   
   /**
@@ -45,7 +48,8 @@ class ScalarProperty implements Property {
    */
   public function __call($name, $args=null) {
     $r = RendererLoader::get_renderer($name);
-    return Sandbox::wrap($r($this, $args));
+     // Note: renderer function is in control of escaping its own output.
+    return $r($this, $this->encoder, $args);
   }
   
   /**

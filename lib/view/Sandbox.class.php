@@ -1,8 +1,8 @@
 <?
 
-require_once('property/ScalarProperty.class.php');
-require_once('property/ListProperty.class.php');
-require_once('property/ObjectProperty.class.php');
+require_once('sandbox/ScalarProperty.class.php');
+require_once('sandbox/ListProperty.class.php');
+require_once('sandbox/ObjectProperty.class.php');
 
 /**
  * Tools that manage the transition between template scope and application scope.
@@ -14,17 +14,17 @@ class Sandbox {
    * ObjectProperty.
    * Variables that already are Property instances will not be wrapped.
    */
-  public static function wrap($value) {
+  public static function wrap($value, $encoder) {
     if ($value instanceof Property) {
       return $value; // don't wrap twice
     }
     if (is_array($value)) {
-      return new ListProperty($value);
+      return new ListProperty($value, $encoder);
     }
     if (is_object($value)) {
-      return new ObjectProperty($value);
+      return new ObjectProperty($value, $encoder);
     }
-    return new ScalarProperty($value);
+    return new ScalarProperty($value, $encoder);
   }
 
   /**

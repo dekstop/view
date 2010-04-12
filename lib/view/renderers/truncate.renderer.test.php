@@ -8,7 +8,7 @@ class TruncateRendererTest extends RendererUnitTestCase {
   }
 
   function test_null() {
-   $this->assertEqual(null, $this->render(null, 'truncate', 10));
+   $this->assertTrue($this->render(null, 'truncate', 10)->is_null());
   }
 
   function test_empty_string() {

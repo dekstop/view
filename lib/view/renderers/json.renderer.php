@@ -1,7 +1,10 @@
 <?
 
-function json_renderer($property, $args) {
-  return json_encode($property->raw());
+/**
+ * Sandboxes with a JsonEncoder instead of the $encoder that gets passed through.
+ */
+function json_renderer($property, $encoder, $args) {
+  return Sandbox::wrap(json_encode($property->raw()), new JsonEncoder());
 }
 
 ?>

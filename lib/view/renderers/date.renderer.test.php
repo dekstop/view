@@ -3,15 +3,15 @@
 class DateRendererTest extends RendererUnitTestCase {
   
   function test_null() {
-    $this->assertEqual(null, $this->render(null, 'date', 'Y-m-d H:i'));
+    $this->assertTrue($this->render(null, 'date', 'Y-m-d H:i')->is_null());
   }
 
   function test_empty_string() {
-    $this->assertEqual(null, $this->render('', 'date', 'Y-m-d H:i'));
+    $this->assertTrue($this->render('', 'date', 'Y-m-d H:i')->is_null());
   }
 
   function test_string() {
-    $this->assertEqual(null, $this->render('abc', 'date', 'Y-m-d H:i'));
+    $this->assertTrue($this->render('abc', 'date', 'Y-m-d H:i')->is_null());
   }
 
   function test_timestamps() {

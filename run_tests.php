@@ -9,16 +9,34 @@ require_once('simpletest/autorun.php');
 set_include_path(get_include_path() . PATH_SEPARATOR . $VIEW_LIB_ROOT);
 require_once('View.php');
 
-class RendererUnitTestCase extends UnitTestCase {
+class ViewUnitTestCase extends UnitTestCase {
+  
+  private $e = null;
+  
+  public function ViewUnitTestCase() {
+    $this->e = new HtmlEncoder();
+  }
+  
+  protected function getEncoder() {
+    return $this->e;
+  }
+  
+  protected function wrap($value) {
+    return Sandbox::wrap($value, $this->e);
+  }
+}
+  
+class RendererUnitTestCase extends ViewUnitTestCase {
+
   /**
     * This can optionally take additional arguments (varargs) and
     * pass them as an array to the render function.
     */
   function render($property_value, $renderer_name) {
     $r = RendererLoader::get_renderer($renderer_name);
-    $p = Sandbox::wrap($property_value);
+    $p = Sandbox::wrap($property_value, $this->getEncoder());
     $a = array_slice(func_get_args(), 2);
-    return $r($p, $a);
+    return $r($p, $this->getEncoder(), $a);
   }  
   
   /**
@@ -27,9 +45,9 @@ class RendererUnitTestCase extends UnitTestCase {
     */
   function render_list($property_value, $renderer_name) {
     $r = RendererLoader::get_list_renderer($renderer_name);
-    $p = Sandbox::wrap($property_value);
+    $p = Sandbox::wrap($property_value, $this->getEncoder());
     $a = array_slice(func_get_args(), 2);
-    return $r($p, $a);
+    return $r($p, $this->getEncoder(), $a);
   }
 }
 

@@ -6,15 +6,29 @@ require_once('Property.interface.php');
  * A container for lists of properties, which can be accessed using array (map)
  * or object syntax, and which can be iterated over. Values are wrapped in 
  * Property instances when they're added.
+ *
+ * This class should never be instantiated directly.
  */
 class ListProperty implements Property, Countable, ArrayAccess, Iterator {
+
   private $data = array();
   private $idx = 0;
+  private $encoder = null;
   
-  public function ListProperty($data=array()) {
-    foreach ($data as $k=>$v) {
-      $this->data[$k] = Sandbox::wrap($v);
+  public function ListProperty($data, $encoder) {
+    $this->encoder = $encoder;
+    if (is_null($data)) {
+      $this->data = null;
     }
+    else {
+      foreach ($data as $k=>$v) {
+        $this->data[$k] = Sandbox::wrap($v, $this->encoder);
+      }
+    }
+  }
+  
+  public function getEncoder() {
+    return $this->encoder;
   }
   
   /**
@@ -29,10 +43,11 @@ class ListProperty implements Property, Countable, ArrayAccess, Iterator {
   }
   
   /**
-   * Simply for convenience. Returns a comma-separated list of all values.
+   * Simply for convenience. Builds a comma-separated list of all values and
+   * encodes the result.
    */
   public function __toString() {
-    return implode(', ', array_values($this->data));
+    return $this->encoder->encode(implode(', ', array_values($this->data)));
   }
   
   /**
@@ -40,7 +55,7 @@ class ListProperty implements Property, Countable, ArrayAccess, Iterator {
    */
   public function __call($name, $args=null) {
     $r = RendererLoader::get_list_renderer($name);
-    return Sandbox::wrap($r($this, $args));
+    return $r($this, $this->encoder, $args);
   }
   
   public function values() {
@@ -90,7 +105,7 @@ class ListProperty implements Property, Countable, ArrayAccess, Iterator {
     if (is_null($key)) { // array append syntax used? e.g. $my_listproperty[] = $value
       $key = count($this->data);
     }
-    $this->data[$key] = Sandbox::wrap($value);
+    $this->data[$key] = Sandbox::wrap($value, $this->encoder);
   }
 
   /**
@@ -118,7 +133,7 @@ class ListProperty implements Property, Countable, ArrayAccess, Iterator {
    * $my_listproperty->a = 123
    */
   public function __set($key, $value) {
-    $this[$key] = Sandbox::wrap($value);
+    $this[$key] = Sandbox::wrap($value, $this->encoder);
   }
   
   /**

@@ -59,7 +59,7 @@ index.view.php:
   <p>Today's date: <?= $timestamp->date('Y-m-d') ?></p>
 
 ... and that's already it. View.php will ensure that all properties get 
-escaped, and it offers a simple rendering extension mechanism.
+escaped, and it offers simple rendering extension mechanisms.
 
 Refer to the code in /example/ for a more thorough treatment of features.
 
@@ -206,8 +206,11 @@ instance, if it isn't already; this allows us to chain render method calls.
 
 TODO: finish fragments, then document them.
 TODO: more useful renderers: strip, capitalize, lower, upper, wordwrap, regex_replace, replace, 
-TODO: plan a thorough approach to escaping: do we really want to call htmlentities on everything? is there malicious markup that we can't escape that way? how can we prevent escaping of sanitised HTML strings? -> write global customisable escaping function, with unit tests using misc malicious markup
+TODO: polish encoding/sandboxing implementation
+* renderer unit test to ensure return values of all renderers are always wrapped (except for some whitelisted ones, e.g. for raw renderer)
+* encoder unit tests with misc malicious markup
+* proper JsonEncoder unit tests
+TODO: unit test to ensure short_open_tag is enabled (but just print a warning maybe.)
+TODO: render tests for some basic template examples (e.g. <ul /> list iteration, inline fragments, ...)
 TODO: implement functions/generators (smarty really only has two that we would like to have: counter, and cycle. both require a way to maintain state.)
 TODO: implement block filters (which wrap around a block of HTML and process it, e.g. to format blocks of text.) doesn't seem too useful for HTML only, but might be interesting as a method to operate on blocks of HTML+PHP; e.g. filters that sanitise embedded markup from external sources
-TODO: make it easy to switch the default renderer to target different output formats with different sanitation rules.
-FIXME: who takes care of escaping, render functions or the default renderer? E.g. compare json() (does no escaping) with implode() (escapes the separator string, and calls the default escaping renderer for each element; this makes it impossible to produce an un-escaped imploded result.)

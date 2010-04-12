@@ -6,14 +6,16 @@
  */
 class ViewHelper {
   
-  private $_templateDir;
+  private $templateDir = null;
+  private $encoder = null;
   
-  public function ViewHelper($templateDir) {
-    $this->_templateDir = $templateDir;
+  public function ViewHelper($templateDir, $encoder) {
+    $this->templateDir = $templateDir;
+    $this->encoder = $encoder;
   }
   
   public function fragment($name, $params=array()) {
-    return new FragmentGenerator($this->_templateDir, Sandbox::unwrap($name), Sandbox::unwrap($params));
+    return new FragmentGenerator($this->templateDir, Sandbox::unwrap($name), Sandbox::unwrap($params), $this->encoder);
   }
 }
 

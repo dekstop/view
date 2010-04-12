@@ -3,19 +3,19 @@
 class HtmlentitiesRendererTest extends RendererUnitTestCase {
 
   function test_null() {
-    $this->assertEqual(null, $this->render(null, 'htmlentities'));
+    $this->assertTrue($this->render(null, 'htmlentities')->is_null());
   }
 
   function test_empty_string() {
-    $this->assertEqual('', $this->render('', 'htmlentities'));
+    $this->assertEqual('', $this->render('', 'htmlentities')->raw());
   }
 
   function test_string() {
-    $this->assertEqual('abc', $this->render('abc', 'htmlentities'));
+    $this->assertEqual('abc', $this->render('abc', 'htmlentities')->raw());
   }
 
   function test_html_string() {
-    $this->assertEqual('&lt;b&gt;', $this->render('<b>', 'htmlentities'));
+    $this->assertEqual('&lt;b&gt;', $this->render('<b>', 'htmlentities')->raw());
   }
 }
 

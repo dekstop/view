@@ -1,7 +1,7 @@
 <?
 
-function implode_list_renderer($list, $args) {
-  return implode(htmlentities($args[0], ENT_QUOTES, 'UTF-8'), $list->values());
+function implode_list_renderer($list, $encoder, $args) {
+  return Sandbox::wrap(implode(Sandbox::wrap($args[0], $encoder), $list->values()), $encoder);
 }
 
 ?>

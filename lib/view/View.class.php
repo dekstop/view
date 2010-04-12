@@ -21,7 +21,7 @@ class View {
     foreach ($__ctx as $__k=>$__v) {
       $$__k = $__v;
     }
-    $view = new ViewHelper($this->templateDir);
+    $view = new ViewHelper($this->templateDir, $__ctx->getEncoder());
     
     // execute template
     if(file_exists($__fn)) {

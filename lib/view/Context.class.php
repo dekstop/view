@@ -1,6 +1,6 @@
 <?
 
-require_once('property/ListProperty.class.php');
+require_once('sandbox/ListProperty.class.php');
 
 /**
  * A container for arbitrary collections of properties. Can be accessed using 
@@ -9,8 +9,13 @@ require_once('property/ListProperty.class.php');
  */
 class Context extends ListProperty {
   
-  public function Context($d = array()) {
-    parent::__construct($d);
+  /**
+   * Parameters:
+   * * $d (optional): a set of properties
+   * * $encoder (optional): an Encoder instance. Defaults to HtmlEncoder.
+   */
+  public function Context($d = array(), $encoder=null) {
+    parent::__construct($d, is_null($encoder) ? new HtmlEncoder() : $encoder);
   }
 
 }

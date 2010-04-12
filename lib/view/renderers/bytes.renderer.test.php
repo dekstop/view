@@ -3,15 +3,15 @@
 class BytesRendererTest extends RendererUnitTestCase {
   
   function test_null() {
-    $this->assertEqual(null, $this->render(null, 'bytes'));
+    $this->assertTrue($this->render(null, 'bytes')->is_null());
   }
 
   function test_empty_string() {
-    $this->assertEqual(null, $this->render('', 'bytes'));
+    $this->assertTrue($this->render('', 'bytes')->is_null());
   }
 
   function test_string() {
-    $this->assertEqual(null, $this->render('abc', 'bytes'));
+    $this->assertTrue($this->render('abc', 'bytes')->is_null());
   }
 
   function test_bytes() {

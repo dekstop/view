@@ -52,11 +52,6 @@ variables.
   <td><?= $vars->list ?></td>
 </tr>
 <tr>
-  <td>Map</td>
-  <td><pre><? print_r($vars->raw()) ?></pre></td>
-  <td><?= $vars ?></td>
-</tr>
-<tr>
   <td>null</td>
   <td><pre><? print_r($vars->null->raw()) ?></pre></td>
   <td><?= $vars->null ?></td>
@@ -108,10 +103,6 @@ variables.
 <tr>
   <td><tt>&lt;?= $list->json() ?&gt;</tt></td>
   <td><tt><?= $vars->list->json() ?></tt></td>
-</tr>
-<tr>
-  <td><tt>&lt;?= $map->json() ?&gt;</tt></td>
-  <td><tt><?= $vars->json() ?></tt></td>
 </tr>
 </table>
 

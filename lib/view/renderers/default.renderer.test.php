@@ -6,7 +6,7 @@ class DefaultRendererTest extends RendererUnitTestCase {
     $this->assertEqual('abc', $this->render('abc', 'default', 'my_default_string'));
     $this->assertEqual('my_default_string', $this->render(null, 'default', 'my_default_string'));
     $this->assertEqual('my_default_string', $this->render('', 'default', 'my_default_string'));
-    $this->assertEqual(null, $this->render(null, 'default', null));
+    $this->assertTrue($this->render(null, 'default', null)->is_null());
   }
   
   function test_no_args() {

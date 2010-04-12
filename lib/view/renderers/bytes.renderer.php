@@ -1,9 +1,9 @@
 <?
 
-function bytes_renderer($property, $args) {
-  if ($property->is_null()) return null;
+function bytes_renderer($property, $encoder, $args) {
+  if ($property->is_null()) return Sandbox::wrap(null, $encoder);
   $bytes = $property->raw();
-  if (!is_numeric($bytes)) return null;
+  if (!is_numeric($bytes)) return Sandbox::wrap(null, $encoder);
   $format = '%d';
   $units = array('byte', 'KB', 'MB', 'GB', 'TB', 'PB');
   $scale = 0;
@@ -12,7 +12,7 @@ function bytes_renderer($property, $args) {
     $scale++;
     $format = '%.2f';
   }
-  return sprintf($format, $bytes) . ' ' . $units[$scale];
+  return Sandbox::wrap(sprintf($format, $bytes) . ' ' . $units[$scale], $encoder);
 }
 
 ?>

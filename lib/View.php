@@ -11,9 +11,14 @@ require_once('Context.class.php');
 require_once('View.class.php');
 require_once('RendererLoader.class.php');
 require_once('Sandbox.class.php');
-
-require_once('generators/Generator.class.php');
-require_once('generators/FragmentGenerator.class.php');
 require_once('ViewHelper.class.php');
+
+require_once('Encoder.interface.php');
+require_once('encoders/HtmlEncoder.class.php');
+require_once('encoders/JsonEncoder.class.php');
+require_once('encoders/XmlEncoder.class.php');
+
+require_once('Generator.class.php');
+require_once('generators/FragmentGenerator.class.php');
 
 ?>

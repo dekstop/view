@@ -1,13 +1,14 @@
 <?
 
-class ListPropertyTest extends UnitTestCase {
+class ListPropertyTest extends ViewUnitTestCase {
+  
   function test_null() {
     // $this->expectError();
-    // $p = new ListProperty(null);
+    // $p = new ListProperty(null, $this->getEncoder());
   }
 
   function test_empty_array() {
-    $p = new ListProperty(array());
+    $p = new ListProperty(array(), $this->getEncoder());
     $this->assertEqual(0, count($p));
     $this->assertEqual(0, $p->count());
     $this->assertEqual('', (string)$p);
@@ -18,10 +19,10 @@ class ListPropertyTest extends UnitTestCase {
 
   function test_array() {
     $list = array(1, 2, 'a');
-    $p = new ListProperty($list);
+    $p = new ListProperty($list, $this->getEncoder());
     // wrap
-    //$this->assertEqual(array(Sandbox::wrap(0), Sandbox::wrap(1), Sandbox::wrap(2)), $p->keys());
-    $this->assertEqual(array(Sandbox::wrap(1), Sandbox::wrap(2), Sandbox::wrap('a')), $p->values());
+    //$this->assertEqual(array($this->wrap(0), $this->wrap(1), $this->wrap(2)), $p->keys());
+    $this->assertEqual(array($this->wrap(1), $this->wrap(2), $this->wrap('a')), $p->values());
     // count
     $this->assertEqual(3, count($p));
     $this->assertEqual(3, $p->count());
@@ -37,7 +38,7 @@ class ListPropertyTest extends UnitTestCase {
 
   function test_array_append() {
     $list = array(1, 2, 'a');
-    $p = new ListProperty($list);
+    $p = new ListProperty($list, $this->getEncoder());
     $p[] = 'b';
     $this->assertEqual(4, $p->count());
     $this->assertEqual('b', $p[3]->raw());
@@ -45,7 +46,7 @@ class ListPropertyTest extends UnitTestCase {
 
   function test_array_iterate() {
     $list = array(1, 2, 'a');
-    $p = new ListProperty($list);
+    $p = new ListProperty($list, $this->getEncoder());
     foreach ($p as $v) {
       $this->assertEqual($list[0], $v->raw());
       array_shift($list); // note: clearing $list here
@@ -55,10 +56,10 @@ class ListPropertyTest extends UnitTestCase {
 
   function test_map() {
     $map = array('a' => 1, 'b' => 2, 'c' => 'a');
-    $p = new ListProperty($map);
+    $p = new ListProperty($map, $this->getEncoder());
     // wrap
-    //$this->assertEqual(array(Sandbox::wrap(0), Sandbox::wrap(1), Sandbox::wrap(2)), $p->keys());
-    $this->assertEqual(array(Sandbox::wrap(1), Sandbox::wrap(2), Sandbox::wrap('a')), $p->values());
+    //$this->assertEqual(array($this->wrap(0), $this->wrap(1), $this->wrap(2)), $p->keys());
+    $this->assertEqual(array($this->wrap(1), $this->wrap(2), $this->wrap('a')), $p->values());
     // count
     $this->assertEqual(3, count($p));
     $this->assertEqual(3, $p->count());
@@ -78,7 +79,7 @@ class ListPropertyTest extends UnitTestCase {
   
   function test_map_append() {
     $map = array('a' => 1, 'b' => 2, 'c' => 'a');
-    $p = new ListProperty($map);
+    $p = new ListProperty($map, $this->getEncoder());
     $p['d'] = 'b';
     $this->assertEqual(4, $p->count());
     $this->assertEqual('b', $p['d']->raw());
@@ -87,7 +88,7 @@ class ListPropertyTest extends UnitTestCase {
   
   function test_map_iterate() {
     $map = array('a' => 1, 'b' => 2, 'c' => 'a');
-    $p = new ListProperty($map);
+    $p = new ListProperty($map, $this->getEncoder());
     foreach ($p as $k=>$v) {
       $this->assertEqual($map[$k], $v->raw());
       unset($map[$k]); // note: clearing $map here
@@ -96,7 +97,7 @@ class ListPropertyTest extends UnitTestCase {
   }
 
   function test_nested_array() {
-    $p = new ListProperty(array());
+    $p = new ListProperty(array(), $this->getEncoder());
     $p->a = array();
     $p->a['b'] = 'c';
     $this->assertEqual(1, $p->count());
@@ -106,39 +107,39 @@ class ListPropertyTest extends UnitTestCase {
   }
   
   function test_unknown_renderer_exception() {
-    $p = new ListProperty(array('a'=>1));
+    $p = new ListProperty(array('a'=>1), $this->getEncoder());
     $this->expectException();
     $p->renderer_which_does_not_exist();
   }
 
   function test_is_null() {
-    $p = new ListProperty();
+    $p = new ListProperty(null, $this->getEncoder());
+    $this->assertEqual(true, $p->is_null());
+    $p = new ListProperty(array(), $this->getEncoder());
     $this->assertEqual(false, $p->is_null());
-    $p = new ListProperty(array());
-    $this->assertEqual(false, $p->is_null());
-    $p = new ListProperty(array(null));
+    $p = new ListProperty(array(null), $this->getEncoder());
     $this->assertEqual(false, $p->is_null());
   }
 
   function test_is_array() {
-    $p = new ListProperty();
+    $p = new ListProperty(null, $this->getEncoder());
+    $this->assertEqual(false, $p->is_array());
+    $p = new ListProperty(array(null), $this->getEncoder());
     $this->assertEqual(true, $p->is_array());
-    $p = new ListProperty(array(null));
-    $this->assertEqual(true, $p->is_array());
-    $p = new ListProperty(array('a'=>1));
+    $p = new ListProperty(array('a'=>1), $this->getEncoder());
     $this->assertEqual(true, $p->is_array());
   }
 
   function test_is_empty() {
-    $p = new ListProperty();
+    $p = new ListProperty(null, $this->getEncoder());
     $this->assertEqual(true, $p->is_empty());
-    $p = new ListProperty(array());
+    $p = new ListProperty(array(), $this->getEncoder());
     $this->assertEqual(true, $p->is_empty());
-    $p = new ListProperty(array(null));
+    $p = new ListProperty(array(null), $this->getEncoder());
     $this->assertEqual(false, $p->is_empty());
-    $p = new ListProperty(array(false));
+    $p = new ListProperty(array(false), $this->getEncoder());
     $this->assertEqual(false, $p->is_empty());
-    $p = new ListProperty(array(1234567890=>'sdfa'));
+    $p = new ListProperty(array(1234567890=>'sdfa'), $this->getEncoder());
     $this->assertEqual(false, $p->is_empty());
   }
 }

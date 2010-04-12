@@ -8,7 +8,7 @@ class MyModelClass {
 }
 
 // prepare some properties to display
-$ctx = new Context(); // could also provide a map of properties to constructor
+$ctx = new Context();
 
 # a string
 $ctx->title = 'View.php – A Basic Example';
